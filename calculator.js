@@ -45,21 +45,25 @@ numButtons.forEach((button) => {
         displayField.textContent = displayValue;
     });
 });
-let operand;
+let operator;
 let firstNum = undefined;
 let secondNum = undefined;
 let secondNumStarting;
-let operationButtons = document.querySelectorAll(".operand");
+let operationButtons = document.querySelectorAll(".operator");
 operationButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        operand = button.textContent;
         if (firstNum === undefined) {
+            if (displayValue.length < 1) {
+                return;
+            }
             firstNum = Number(displayValue);
+            operator = button.textContent;
         }
         else {
             secondNum = Number(displayValue.substring(secondNumStarting));
-            solution = operate(operand,firstNum,secondNum);
+            solution = operate(operator,firstNum,secondNum);
             firstNum = solution;
+            operator = button.textContent;
         }
         secondNumStarting = displayValue.length + 1;
         displayValue += button.textContent;
@@ -72,7 +76,13 @@ let equalButton = document.querySelector(".equals");
 let solution;
 equalButton.addEventListener("click",() => {
     secondNum = Number(displayValue.substring(secondNumStarting));
-    solution = operate(operand,firstNum,secondNum);
+    if (displayValue.substring(secondNumStarting) < 1) {
+        return;
+    }
+    solution = operate(operator,firstNum,secondNum);
+    if (!Number.isInteger(solution)) {
+        solution = Math.round(solution * 10000000000)/10000000000;
+    }
     displayField.textContent = solution;
     displayValue = "";
     firstNum = undefined;
