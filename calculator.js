@@ -77,6 +77,8 @@ equalButton.addEventListener("click",() => {
     displayValue = "";
     firstNum = undefined;
     secondNum = undefined;
+    solution = undefined;
+    hasDecimal = false;
 })
 
 let clearButton = document.querySelector(".clear");
@@ -87,4 +89,17 @@ clearButton.addEventListener("click", () => {
     firstNum = undefined;
     secondNum = undefined;
     solution = undefined;
+    hasDecimal = false;
 })
+
+let hasDecimal = false;
+
+let decimalButton = document.querySelector(".decimal");
+
+decimalButton.addEventListener("click", () => {
+    if (!hasDecimal) {
+        displayValue += decimalButton.textContent;
+        displayField.textContent = displayValue;
+        hasDecimal = true;
+    }
+});
